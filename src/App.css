@@ -13,9 +13,15 @@ body {
 }
 
 .image-container {
+  display: flex;
+  flex-direction: column;
   position: relative;
   transition: transform 0.2s;
   padding: 0;
+}
+
+.movie-info {
+  text-align: center;
 }
 
 .image-container:hover {
@@ -33,7 +39,7 @@ body {
   width: 100%;
   transform: 0.5s ease;
   opacity: 0;
-  bottom: 0;
+  bottom: 88px;
   font-size: 17px;
   padding: 20px;
   text-align: center;

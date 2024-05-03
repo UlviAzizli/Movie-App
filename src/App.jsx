@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import MovieList from "./components/MovieList";
-import MovieListHeading from "./components/MovieListHeading";
-import SearchBox from "./components/SearchBox";
-import AddFavorite from "./components/AddFavorite";
-import RemoveFavorite from "./components/RemoveFavorite";
+import { Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import FavoritesPage from "./pages/FavoritesPage";
+import Navbar from "./components/Navbar";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -23,17 +22,16 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    getMovieRequest(searchValue);
-  }, [searchValue]);
+  // useEffect(() => {
+  //   getMovieRequest(searchValue);
+  // }, [searchValue]);
 
   useEffect(() => {
-    const movieFavorites = JSON.parse(
+    const storedFavorites = JSON.parse(
       localStorage.getItem("our-app-favorites")
     );
-
-    if (movieFavorites) {
-      setFavorites(movieFavorites);
+    if (storedFavorites) {
+      setFavorites(storedFavorites);
     }
   }, []);
 
@@ -51,34 +49,35 @@ function App() {
     const newFavoriteList = favorites.filter(
       (favorite) => favorite.imdbID !== movie.imdbID
     );
-
     setFavorites(newFavoriteList);
     saveToLocalStorage(newFavoriteList);
   };
 
   return (
     <div className="container-fluid movie-app">
-      <div className="row d-flex align-items-center mt-4 mb-4">
-        <MovieListHeading heading="Movies" />
-        <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
-      </div>
-      <div className="row">
-        <MovieList
-          movies={movies}
-          handleFavoriteClick={addFavoriteMovie}
-          favoriteComponent={AddFavorite}
+      <Navbar />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HomePage
+              getMovieRequest={getMovieRequest}
+              movies={movies}
+              setSearchValue={setSearchValue}
+              searchValue={searchValue}
+            />
+          }
         />
-      </div>
-      <div className="row d-flex align-items-center mt-4 mb-4">
-        <MovieListHeading heading="My Favorites" />
-      </div>
-      <div className="row">
-        <MovieList
-          movies={favorites}
-          handleFavoriteClick={removeFavoriteMovie}
-          favoriteComponent={RemoveFavorite}
+        <Route
+          path="/favorites"
+          element={
+            <FavoritesPage
+              favorites={favorites}
+              removeFavoriteMovie={removeFavoriteMovie}
+            />
+          }
         />
-      </div>
+      </Routes>
     </div>
   );
 }
