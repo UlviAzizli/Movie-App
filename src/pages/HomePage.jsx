@@ -4,8 +4,13 @@ import MovieListHeading from "../components/MovieListHeading";
 import SearchBox from "../components/SearchBox";
 import AddFavorite from "../components/AddFavorite";
 
-function HomePage({ getMovieRequest, movies, setSearchValue, searchValue }) {
-  //   const [searchValue, setSearchValue] = useState("");
+function HomePage({
+  getMovieRequest,
+  movies,
+  setSearchValue,
+  searchValue,
+  addFavoriteMovie,
+}) {
   useEffect(() => {
     getMovieRequest(searchValue);
   }, [searchValue]);
@@ -20,7 +25,7 @@ function HomePage({ getMovieRequest, movies, setSearchValue, searchValue }) {
       <div className="row">
         <MovieList
           movies={movies}
-          handleFavoriteClick={() => {}}
+          addAndRemove={addFavoriteMovie}
           favoriteComponent={AddFavorite}
         />
       </div>
