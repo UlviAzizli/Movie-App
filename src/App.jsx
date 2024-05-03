@@ -16,15 +16,12 @@ function App() {
 
     const response = await fetch(URL);
     const responseJson = await response.json();
+    console.log(responseJson);
 
     if (responseJson.Search) {
       setMovies(responseJson.Search);
     }
   };
-
-  // useEffect(() => {
-  //   getMovieRequest(searchValue);
-  // }, [searchValue]);
 
   useEffect(() => {
     const storedFavorites = JSON.parse(
@@ -61,6 +58,7 @@ function App() {
           path="/"
           element={
             <HomePage
+              addFavoriteMovie={addFavoriteMovie}
               getMovieRequest={getMovieRequest}
               movies={movies}
               setSearchValue={setSearchValue}

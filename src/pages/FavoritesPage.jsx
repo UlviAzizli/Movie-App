@@ -13,7 +13,8 @@ function FavoritesPage({ favorites, removeFavoriteMovie }) {
       <div className="row">
         <MovieList
           movies={favorites}
-          handleFavoriteClick={removeFavoriteMovie}
+          // handleFavoriteClick={removeFavoriteMovie}
+          addAndRemove={removeFavoriteMovie}
           favoriteComponent={RemoveFavorite}
         />
       </div>
