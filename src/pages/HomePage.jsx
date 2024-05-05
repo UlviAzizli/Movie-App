@@ -4,13 +4,26 @@ import MovieListHeading from "../components/MovieListHeading";
 import SearchBox from "../components/SearchBox";
 import AddFavorite from "../components/AddFavorite";
 
-function HomePage({
-  getMovieRequest,
-  movies,
-  setSearchValue,
-  searchValue,
-  addFavoriteMovie,
-}) {
+function HomePage({ addFavoriteMovie }) {
+  const [movies, setMovies] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+
+  const getMovieRequest = async () => {
+    try {
+      const response = await fetch(
+        `http://www.omdbapi.com/?s=${searchValue}&apikey=b1f9a36e`
+      );
+      const data = await response.json();
+      if (response.ok) {
+        setMovies(data.Search || []);
+      } else {
+        console.error("Failed to fetch movies:", data.Error);
+      }
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
+  };
+
   useEffect(() => {
     getMovieRequest(searchValue);
   }, [searchValue]);
