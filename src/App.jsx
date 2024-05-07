@@ -55,7 +55,7 @@ function App() {
 
   useEffect(() => {
     getFavoriteMovie();
-  }, []);
+  }, [favorites]);
 
   return (
     <div className="container-fluid movie-app">
@@ -67,7 +67,7 @@ function App() {
         />
         <Route
           path="/:movieID"
-          element={<MovieDetails addAndRemove={addFavoriteMovie} />}
+          element={<MovieDetails addFavoriteMovie={addFavoriteMovie} />}
         />
         <Route
           path="/favorites"

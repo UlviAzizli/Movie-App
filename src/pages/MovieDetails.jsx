@@ -2,46 +2,32 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import omdbAPI from "../services/OmdbAPI";
 import AddFavorite from "../components/AddFavorite";
-import MovieList from "../components/MovieList";
+import AddAndRemove from "../components/AddAndRemove";
 
-export default function MovieDetails({ addAndRemove }) {
+export default function MovieDetails({ addFavoriteMovie }) {
   const { movieID } = useParams();
   const [movie, setMovie] = useState(null);
 
   useEffect(() => {
-    omdbAPI.getMovieByID(movieID).then((resp) => setMovie(resp.data));
+    omdbAPI.getMovieByID(movieID).then((resp) => {
+      if (resp.data) {
+        setMovie([resp.data]); // Wrap in an array
+      } else {
+        setMovie([]); // Ensure it's still an array even if no data
+      }
+    });
   }, [movieID]);
 
   if (!movie) return "Loading...";
 
   return (
-    <div className="container mt-4">
+    <div className="container-fluid movie-app">
       <div className="row">
-        <div className="col">
-          <img
-            src={movie.Poster}
-            alt={movie.Title}
-            className="img-fluid rounded"
-          />
-        </div>
-        <div className="col">
-          <h1>{movie.Title}</h1>
-          <p>
-            <strong>Year:</strong> {movie.Year}
-          </p>
-          <p>
-            <strong>Genre:</strong> {movie.Genre}
-          </p>
-          <p>
-            <strong>Plot:</strong> {movie.Plot}
-          </p>
-          <p>
-            <strong>Director:</strong> {movie.Director}
-          </p>
-          <p>
-            <strong>Actors:</strong> {movie.Actors}
-          </p>
-        </div>
+        <AddAndRemove
+          movies={movie}
+          addAndRemove={addFavoriteMovie}
+          favoriteComponent={AddFavorite}
+        />
       </div>
     </div>
   );

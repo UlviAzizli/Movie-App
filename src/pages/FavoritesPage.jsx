@@ -2,6 +2,7 @@ import React from "react";
 import MovieList from "../components/MovieList";
 import MovieListHeading from "../components/MovieListHeading";
 import RemoveFavorite from "../components/RemoveFavorite";
+import AddAndRemove from "../components/AddAndRemove";
 
 function FavoritesPage({ favorites, setFavorites }) {
   const removeFavoriteMovie = async (movie) => {
@@ -29,9 +30,8 @@ function FavoritesPage({ favorites, setFavorites }) {
       </div>
 
       <div className="row">
-        <MovieList
+        <AddAndRemove
           movies={favorites}
-          // handleFavoriteClick={removeFavoriteMovie}
           addAndRemove={removeFavoriteMovie}
           favoriteComponent={RemoveFavorite}
         />
