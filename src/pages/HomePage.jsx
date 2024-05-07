@@ -39,10 +39,6 @@ function HomePage({ addFavoriteMovie }) {
     }
   };
 
-  // useEffect(() => {
-  //   getMovieRequest(searchValue);
-  // }, [searchValue]);
-
   return (
     <div className="container-fluid movie-app">
       <div className="row d-flex align-items-center mt-4 mb-4">
@@ -57,8 +53,8 @@ function HomePage({ addFavoriteMovie }) {
       <div className="row">
         <MovieList
           movies={movies}
-          addAndRemove={addFavoriteMovie}
-          favoriteComponent={AddFavorite}
+          // addAndRemove={addFavoriteMovie}
+          // favoriteComponent={AddFavorite}
         />
       </div>
     </div>
