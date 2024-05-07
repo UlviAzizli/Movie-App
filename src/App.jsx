@@ -5,25 +5,29 @@ import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import FavoritesPage from "./pages/FavoritesPage";
 import Navbar from "./components/Navbar";
+import PageNotFound from "./pages/PageNotFound";
+import Footer from "./components/Footer";
+import ContactInfoPage from "./components/ContactInfoPage";
+import MovieDetails from "./pages/MovieDetails";
+import axios from "axios";
 
 function App() {
   const [favorites, setFavorites] = useState([]);
 
   const addFavoriteMovie = async (movie) => {
     try {
-      const response = await fetch(
+      const response = await axios.post(
         "https://my-movie-app.adaptable.app/favorites",
+        movie,
         {
-          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(movie),
         }
       );
       console.log(response);
-      if (response.ok) {
-        const newFavorite = await response.json();
+      if (response.status === 200) {
+        const newFavorite = await response.data;
         setFavorites([...favorites, newFavorite]);
       } else {
         console.error("Failed to add favorite movie:", response.statusText);
@@ -35,11 +39,11 @@ function App() {
 
   const getFavoriteMovie = async () => {
     try {
-      const response = await fetch(
+      const response = await axios.get(
         "https://my-movie-app.adaptable.app/favorites"
       );
-      if (response.ok) {
-        const newFavorite = await response.json();
+      if (response.status === 200) {
+        const newFavorite = response.data;
         setFavorites(newFavorite);
       } else {
         console.error("Failed to add favorite movie:", response.statusText);
@@ -62,14 +66,24 @@ function App() {
           element={<HomePage addFavoriteMovie={addFavoriteMovie} />}
         />
         <Route
+          path="/:movieID"
+          element={<MovieDetails addAndRemove={addFavoriteMovie} />}
+        />
+        <Route
           path="/favorites"
           element={
             <FavoritesPage favorites={favorites} setFavorites={setFavorites} />
           }
         />
+        <Route path="/contact-info" element={<ContactInfoPage />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
 
 export default App;
+// "/" <HomePage />
+// "/movies" <Movies />
+// "/movies/:movideID" <MovieDetails />
