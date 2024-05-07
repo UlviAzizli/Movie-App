@@ -3,8 +3,10 @@
   flex-wrap: nowrap;
 }
 .movie-poster {
-  max-width: 200px;
-  height: auto;
+  width: 100%; /* Ensures it fills the container */
+  height: 100%; /* Ensures it fills the container */
+  object-fit: cover;
+  object-position: center;
 }
 
 .image-container {
@@ -17,6 +19,7 @@
 
 .movie-info {
   text-align: center;
+  color: #ffffff;
 }
 
 .image-container:hover {
@@ -49,12 +52,11 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: linear-gradient(to right, #000000, #676768);
-  color: white;
+  background: linear-gradient(to right, #070707, #5d5c5c);
+  color: rgb(255, 255, 255);
 }
 
 .footer {
   margin-top: auto;
   margin-bottom: 0;
 }
-

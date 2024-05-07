@@ -7,7 +7,7 @@ import FavoritesPage from "./pages/FavoritesPage";
 import Navbar from "./components/Navbar";
 import PageNotFound from "./pages/PageNotFound";
 import Footer from "./components/Footer";
-import ContactInfoPage from "./components/ContactInfoPage";
+import ContactInfoPage from "./pages/ContactInfoPage";
 import MovieDetails from "./pages/MovieDetails";
 import axios from "axios";
 

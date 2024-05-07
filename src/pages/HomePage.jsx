@@ -51,11 +51,7 @@ function HomePage({ addFavoriteMovie }) {
       </div>
 
       <div className="row">
-        <MovieList
-          movies={movies}
-          // addAndRemove={addFavoriteMovie}
-          // favoriteComponent={AddFavorite}
-        />
+        <MovieList movies={movies} />
       </div>
     </div>
   );

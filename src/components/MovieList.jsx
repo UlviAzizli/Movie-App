@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
-function MovieList({ movies,  }) {
+function MovieList({ movies }) {
   // const FavoriteMovies = favoriteComponent;
   return (
     <>
@@ -12,18 +12,34 @@ function MovieList({ movies,  }) {
               to={`/${movie.imdbID}`}
               className="image-container col-auto d-flex justify-content-start m-3 "
               key={movie.imdbID || index}
+              style={{ textDecoration: "none" }}
             >
-              <img src={movie.Poster} alt="movie" className="movie-poster" />
-              <div className="movie-info">
+              <div>
+                <img
+                  src={movie.Poster}
+                  alt="movie"
+                  className="movie-poster"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    objectPosition: "center", // Ensures the image covers the area without distorting aspect ratio
+                  }}
+                />
+              </div>
+              {/* <img src={movie.Poster} alt="movie" className="movie-poster" /> */}
+              <div
+                className="movie-info"
+                style={{
+                  maxWidth: "100%",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 <p>{movie.Title}</p>
                 <p>{movie.Year}</p>
               </div>
-              {/* <div
-                onClick={() => addAndRemove(movie)}
-                className="overlay d-flex align-items-center justify-content-center"
-              >
-                <FavoriteMovies />
-              </div> */}
             </Link>
           </Fragment>
         ))}
@@ -31,30 +47,3 @@ function MovieList({ movies,  }) {
   );
 }
 export default MovieList;
-
-{
-  /* <>
-      {movies &&
-        movies.map((movie, index) => (
-         <div
-              className="image-container col-auto d-flex justify-content-start m-3 "
-              key={movie.imdbID || index}
-            >
-              <img src={movie.Poster} alt="movie" className="movie-poster" />
-              <div className="movie-info">
-                <p>{movie.Title}</p>
-                <p>{movie.Year}</p>
-              </div>
-              <div
-                onClick={() => addAndRemove(movie)}
-                className="overlay d-flex align-items-center justify-content-center"
-              >
-                <FavoriteMovies />
-              </div>
-              </div>
-            
-         
-        ))}
-        </>
-    </> */
-}

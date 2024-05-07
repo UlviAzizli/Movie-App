@@ -6,7 +6,7 @@ export default function AddAndRemove({
   addAndRemove,
   favoriteComponent,
 }) {
-    const FavoriteMovies = favoriteComponent;
+  const FavoriteMovies = favoriteComponent;
   if (!Array.isArray(movies)) {
     console.error("Expected movies to be an array", movies);
     return null; // Or render an error message or fallback UI
