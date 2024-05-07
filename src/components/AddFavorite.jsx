@@ -3,7 +3,9 @@ import React from "react";
 function AddFavorite() {
   return (
     <>
-      <span className="mr-2">Add your Favorites</span>
+      <span className="mr-2" style={{ color: "#FFFFFF" }}>
+        Add your Favorites
+      </span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
