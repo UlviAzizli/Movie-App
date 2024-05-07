@@ -3,36 +3,55 @@ import MovieList from "../components/MovieList";
 import MovieListHeading from "../components/MovieListHeading";
 import SearchBox from "../components/SearchBox";
 import AddFavorite from "../components/AddFavorite";
+import omdbAPI from "../services/OmdbAPI";
 
 function HomePage({ addFavoriteMovie }) {
   const [movies, setMovies] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
-  const getMovieRequest = async () => {
-    try {
-      const response = await fetch(
-        `http://www.omdbapi.com/?s=${searchValue}&apikey=b1f9a36e`
-      );
-      const data = await response.json();
-      if (response.ok) {
-        setMovies(data.Search || []);
-      } else {
-        console.error("Failed to fetch movies:", data.Error);
+  useEffect(() => {
+    const getInitialMovies = async () => {
+      try {
+        const currentYear = new Date().getFullYear().toString();
+        const response = await omdbAPI.getMovieBySearchInput(currentYear);
+        console.log(response);
+
+        const sortedMovies = response.data.Search.sort(
+          (a, b) => b.Year - a.Year
+        );
+        setMovies(sortedMovies || []);
+      } catch (error) {
+        console.error("Error fetching initial movies:", error);
       }
+    };
+
+    getInitialMovies();
+  }, []);
+
+  const getMovieRequest = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await omdbAPI.getMovieBySearchInput(searchValue);
+      console.log(response);
+      setMovies(response.data.Search || []);
     } catch (error) {
       console.error("Error fetching movies:", error);
     }
   };
 
-  useEffect(() => {
-    getMovieRequest(searchValue);
-  }, [searchValue]);
+  // useEffect(() => {
+  //   getMovieRequest(searchValue);
+  // }, [searchValue]);
 
   return (
     <div className="container-fluid movie-app">
       <div className="row d-flex align-items-center mt-4 mb-4">
         <MovieListHeading heading="Movies" />
-        <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
+        <SearchBox
+          onSubmit={getMovieRequest}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+        />
       </div>
 
       <div className="row">

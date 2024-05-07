@@ -1,5 +1,5 @@
-import React from "react";
-import AddFavorite from "./AddFavorite";
+import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 function MovieList({ movies, addAndRemove, favoriteComponent }) {
   const FavoriteMovies = favoriteComponent;
@@ -7,24 +7,25 @@ function MovieList({ movies, addAndRemove, favoriteComponent }) {
     <>
       {movies &&
         movies.map((movie, index) => (
-          <div
-            className="image-container col-auto d-flex justify-content-start m-3 "
-            key={movie.imdbID || index}
-          >
-            <img src={movie.Poster} alt="movie" className="movie-poster" />
-            <div className="movie-info">
-              <p>{movie.Title}</p>
-              <p>{movie.Year}</p>
-            </div>
-
-            <div
-              onClick={() => addAndRemove(movie)}
-              className="overlay d-flex align-items-center justify-content-center"
+          <Fragment key={index}>
+            <Link
+              to={`/${movie.imdbID}`}
+              className="image-container col-auto d-flex justify-content-start m-3 "
+              key={movie.imdbID || index}
             >
-              {" "}
-              <FavoriteMovies />
-            </div>
-          </div>
+              <img src={movie.Poster} alt="movie" className="movie-poster" />
+              <div className="movie-info">
+                <p>{movie.Title}</p>
+                <p>{movie.Year}</p>
+              </div>
+              <div
+                onClick={() => addAndRemove(movie)}
+                className="overlay d-flex align-items-center justify-content-center"
+              >
+                <FavoriteMovies />
+              </div>
+            </Link>
+          </Fragment>
         ))}
     </>
   );
